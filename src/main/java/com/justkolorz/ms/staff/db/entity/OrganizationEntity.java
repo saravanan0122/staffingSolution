@@ -1,17 +1,15 @@
 package com.justkolorz.ms.staff.db.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.UUID;
 
-import jakarta.persistence.CascadeType;
+import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.UuidGenerator.Style;
+
+import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +22,8 @@ public class OrganizationEntity implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id	
+	@GeneratedValue(generator ="uuid2")
+	@UuidGenerator(style = Style.AUTO)
 	private UUID organizationId;
 	private String organizationName;
 	private String organizationCode;

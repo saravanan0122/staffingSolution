@@ -1,7 +1,6 @@
 package com.justkolorz.ms.staff.db.entity;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
