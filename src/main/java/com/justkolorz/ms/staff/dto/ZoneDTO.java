@@ -1,33 +1,13 @@
-package com.justkolorz.ms.staff.db.entity;
+package com.justkolorz.ms.staff.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.annotations.UuidGenerator.Style;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
-@Table(name="zone", schema = "staafing_service_dev")
 @Data
 @EqualsAndHashCode
-public class ZoneEntity implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-	@Id	
-	@GeneratedValue(generator ="uuid2")
-	@UuidGenerator(style = Style.AUTO)
-	private UUID zoneId;
+public class ZoneDTO {
+	
+	private String zoneId;
 	private String zoneName;
 	private String zoneCode;
 	private String address;
@@ -37,16 +17,13 @@ public class ZoneEntity implements Serializable{
 	private int phoneNumber;
 	private String zoneManagerCode;
 	private String zoneManager;
-
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "organizationId")
-	private OrganizationEntity organizationId;
-		
+	private String organizationId;
 	
-	public UUID getZoneId() {
+	
+	public String getZoneId() {
 		return zoneId;
 	}
-	public void setZoneId(UUID zoneId) {
+	public void setZoneId(String zoneId) {
 		this.zoneId = zoneId;
 	}
 	public String getZoneName() {
@@ -91,6 +68,7 @@ public class ZoneEntity implements Serializable{
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
 	public String getZoneManagerCode() {
 		return zoneManagerCode;
 	}
@@ -103,19 +81,11 @@ public class ZoneEntity implements Serializable{
 	public void setZoneManager(String zoneManager) {
 		this.zoneManager = zoneManager;
 	}
-	public OrganizationEntity getOrganizationId() {
+	public String getOrganizationId() {
 		return organizationId;
 	}
-	public void setOrganizationId(OrganizationEntity organizationId) {
+	public void setOrganizationId(String organizationId) {
 		this.organizationId = organizationId;
 	}
 	
-	
-	
-	
-	
-	
-
-	
-
 }

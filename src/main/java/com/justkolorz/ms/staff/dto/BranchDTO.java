@@ -1,34 +1,12 @@
-package com.justkolorz.ms.staff.db.entity;
+package com.justkolorz.ms.staff.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.annotations.UuidGenerator.Style;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
-@Table(name="branch", schema = "staafing_service_dev")
 @Data
 @EqualsAndHashCode
-public class BranchEntity implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-	@Id	
-	@GeneratedValue(generator ="uuid2")
-	@UuidGenerator(style = Style.AUTO)
-	private UUID branchId;
+public class BranchDTO {
+	
 	private String branchName;
 	private String branchCode;
 	private String address;
@@ -39,25 +17,18 @@ public class BranchEntity implements Serializable{
 	private String landlineNumber;
 	private String faxNumber;
 	private String phoneNumber;
-
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "areaId")
-	private AreaEntity areaId;
+	private String branchId;
+	private String areaId;
+	private String zoneId;
+	private String departmentId;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "zoneId")
-	private ZoneEntity zoneId;
-
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	@JoinColumn(name = "departmentId")
-	private DepartmentEntity departmentId;
-
-	public UUID getBranchId() {
-		return branchId;
-	}
-
-	public void setBranchId(UUID branchId) {
-		this.branchId = branchId;
+	@Override
+	public String toString() {
+		return "BranchDTO [branchName=" + branchName + ", branchCode=" + branchCode + ", address=" + address
+				+ ", branchType=" + branchType + ", email=" + email + ", branchManagerId=" + branchManagerId
+				+ ", branchManager=" + branchManager + ", landlineNumber=" + landlineNumber + ", faxNumber=" + faxNumber
+				+ ", phoneNumber=" + phoneNumber + ", branchId=" + branchId + ", areaId=" + areaId + ", zoneId="
+				+ zoneId + ", departmentId=" + departmentId + "]";
 	}
 
 	public String getBranchName() {
@@ -116,7 +87,6 @@ public class BranchEntity implements Serializable{
 		this.branchManager = branchManager;
 	}
 
-	
 	public String getLandlineNumber() {
 		return landlineNumber;
 	}
@@ -141,28 +111,40 @@ public class BranchEntity implements Serializable{
 		this.phoneNumber = phoneNumber;
 	}
 
-	public AreaEntity getAreaId() {
+	public String getBranchId() {
+		return branchId;
+	}
+
+	public void setBranchId(String branchId) {
+		this.branchId = branchId;
+	}
+
+	public String getAreaId() {
 		return areaId;
 	}
 
-	public void setAreaId(AreaEntity areaId) {
+	public void setAreaId(String areaId) {
 		this.areaId = areaId;
 	}
 
-	public ZoneEntity getZoneId() {
+	public String getZoneId() {
 		return zoneId;
 	}
 
-	public void setZoneId(ZoneEntity zoneId) {
+	public void setZoneId(String zoneId) {
 		this.zoneId = zoneId;
 	}
 
-	public DepartmentEntity getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
 
-	public void setDepartmentId(DepartmentEntity departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
+	
+	
+	
+	
 
 }

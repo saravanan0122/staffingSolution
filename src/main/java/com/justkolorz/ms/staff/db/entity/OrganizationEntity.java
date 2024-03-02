@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.annotations.UuidGenerator.Style;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -107,18 +106,7 @@ public class OrganizationEntity implements Serializable{
 	}
 	public void setFoundedYear(int foundedYear) {
 		this.foundedYear = foundedYear;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	}	
 	
 	
-
-
-	
-	
-	
-
-	
-
 }
