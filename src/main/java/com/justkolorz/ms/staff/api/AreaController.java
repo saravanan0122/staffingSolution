@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.justkolorz.ms.staff.db.entity.AreaEntity;
 import com.justkolorz.ms.staff.db.repository.AreaRepository;
+import com.justkolorz.ms.staff.db.repository.ZoneRepository;
+import com.justkolorz.ms.staff.dto.AreaDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -31,14 +34,27 @@ public class AreaController {
 	@Autowired
 	AreaRepository areaRepository;
 
+	@Autowired
+	ZoneRepository zoneRepository;
+
+
 	@PostMapping("/create")
-	private ResponseEntity<String> craeteArea(@RequestBody AreaEntity area) {
-		return new ResponseEntity<>(areaRepository.save(area).getAreaName(), HttpStatus.OK);
+	private ResponseEntity<String> craeteArea(@RequestBody AreaDTO area) {
+
+		var zone = zoneRepository.findById(UUID.fromString(area.getZoneId()));
+		var areaEntity  = new AreaEntity();
+		BeanUtils.copyProperties(area, areaEntity);
+		areaEntity.setZoneId(zone.get());
+		return new ResponseEntity<>(areaRepository.save(areaEntity).getAreaName(), HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	private ResponseEntity<String> updateArea(@RequestBody AreaEntity area) {
-		return new ResponseEntity<>(areaRepository.save(area).getAreaName(), HttpStatus.OK);
+	private ResponseEntity<String> updateArea(@RequestBody AreaDTO area) {
+		String[] ignoreProperties = {"areaId","zoneId"};
+		var areaEntity  = new AreaEntity();
+		BeanUtils.copyProperties(area, areaEntity,ignoreProperties);
+		areaEntity.setAreaId(UUID.fromString(area.getAreaId()));
+		return new ResponseEntity<>(areaRepository.save(areaEntity).getAreaName(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{areaId}")

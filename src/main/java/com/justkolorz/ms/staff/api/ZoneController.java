@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -55,7 +52,7 @@ public class ZoneController {
 
 	@PutMapping("/update")
 	private ResponseEntity<String> updateZone(@RequestBody ZoneDTO zone) {
-		String[] ignoreProperties = {"zoneId"};
+		String[] ignoreProperties = {"zoneId","organizationId"};
 		var zoneEntity  = new ZoneEntity();
 		BeanUtils.copyProperties(zone, zoneEntity,ignoreProperties);
 		zoneEntity.setZoneId(UUID.fromString(zone.getZoneId()));

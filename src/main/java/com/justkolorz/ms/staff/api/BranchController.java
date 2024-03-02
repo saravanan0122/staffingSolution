@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.justkolorz.ms.staff.db.entity.BranchEntity;
+import com.justkolorz.ms.staff.db.repository.AreaRepository;
 import com.justkolorz.ms.staff.db.repository.BranchRepository;
+import com.justkolorz.ms.staff.db.repository.ZoneRepository;
+import com.justkolorz.ms.staff.dto.BranchDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -30,15 +34,36 @@ public class BranchController {
 
 	@Autowired
 	BranchRepository branchRepository;
+	
+	@Autowired
+	AreaRepository areaRepository;
 
+	@Autowired
+	ZoneRepository zoneRepository;
+
+	
 	@PostMapping("/create")
-	private ResponseEntity<String> craeteBranch(@RequestBody BranchEntity branch) {
-		return new ResponseEntity<>(branchRepository.save(branch).getBranchName(), HttpStatus.OK);
+	private ResponseEntity<String> craeteBranch(@RequestBody BranchDTO branch) {
+
+		var area = areaRepository.findById(UUID.fromString(branch.getAreaId())); //Check
+		var zone = zoneRepository.findById(UUID.fromString(branch.getZoneId())); //Check
+		var branchEntity  = new BranchEntity();
+		BeanUtils.copyProperties(branch, branchEntity);
+		
+
+		branchEntity.setZoneId(zone.get());
+		branchEntity.setAreaId(area.get());
+		
+		return new ResponseEntity<>(branchRepository.save(branchEntity).getBranchName(), HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	private ResponseEntity<String> updateBranch(@RequestBody BranchEntity branch) {
-		return new ResponseEntity<>(branchRepository.save(branch).getBranchName(), HttpStatus.OK);
+	private ResponseEntity<String> updateBranch(@RequestBody BranchDTO branch) {
+		String[] ignoreProperties = {"branchId","areaId","zoneId","departmentId"};
+		var updatedBranch  = branchRepository.findByBranchId(UUID.fromString(branch.getBranchId()));
+		BeanUtils.copyProperties(branch, updatedBranch,ignoreProperties);
+		return new ResponseEntity<>(branchRepository.save(updatedBranch).getBranchName(), HttpStatus.OK);
+
 	}
 
 	@DeleteMapping("/delete/{branchId}")

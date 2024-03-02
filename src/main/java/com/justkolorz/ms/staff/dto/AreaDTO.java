@@ -1,35 +1,13 @@
-package com.justkolorz.ms.staff.db.entity;
+package com.justkolorz.ms.staff.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.annotations.UuidGenerator.Style;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
-@Table(name="area", schema = "staafing_service_dev")
 @Data
 @EqualsAndHashCode
-public class AreaEntity implements Serializable{
+public class AreaDTO {
 
-	private static final long serialVersionUID = 1L;
-	@Id	
-	@GeneratedValue(generator ="uuid2")
-	@UuidGenerator(style = Style.AUTO)
-	private UUID areaId;
+	private String areaId;
 	private String areaName;
 	private String areaCode;
 	private String address;
@@ -39,100 +17,90 @@ public class AreaEntity implements Serializable{
 	private int phoneNumber;
 	private String areaManagerId;
 	private String areaManager;
+	private String zoneId;
 	
-	@ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
-	@JoinColumn(name = "zoneId")
-	@OnDelete(action=OnDeleteAction.CASCADE)
-	private ZoneEntity zoneId;
+	
 
-	public UUID getAreaId() {
+	@Override
+	public String toString() {
+		return "AreaDTO [areaId=" + areaId + ", areaName=" + areaName + ", areaCode=" + areaCode + ", address="
+				+ address + ", email=" + email + ", landlineNumber=" + landlineNumber + ", faxNumber=" + faxNumber
+				+ ", phoneNumber=" + phoneNumber + ", areaManagerId=" + areaManagerId + ", areaManager=" + areaManager
+				+ ", zoneId=" + zoneId + "]";
+	}
+	
+	public String getZoneId() {
+		return zoneId;
+	}
+
+	public void setZoneId(String zoneId) {
+		this.zoneId = zoneId;
+	}
+
+	public String getAreaId() {
 		return areaId;
 	}
 
-	public void setAreaId(UUID areaId) {
+	public void setAreaId(String areaId) {
 		this.areaId = areaId;
 	}
 
 	public String getAreaName() {
 		return areaName;
 	}
-
 	public void setAreaName(String areaName) {
 		this.areaName = areaName;
 	}
-
 	public String getAreaCode() {
 		return areaCode;
 	}
-
 	public void setAreaCode(String areaCode) {
 		this.areaCode = areaCode;
 	}
-
 	public String getAddress() {
 		return address;
 	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public int getLandlineNumber() {
 		return landlineNumber;
 	}
-
 	public void setLandlineNumber(int landlineNumber) {
 		this.landlineNumber = landlineNumber;
 	}
-
 	public int getFaxNumber() {
 		return faxNumber;
 	}
-
 	public void setFaxNumber(int faxNumber) {
 		this.faxNumber = faxNumber;
 	}
-
 	public int getPhoneNumber() {
 		return phoneNumber;
 	}
-
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
 	public String getAreaManagerId() {
 		return areaManagerId;
 	}
-
 	public void setAreaManagerId(String areaManagerId) {
 		this.areaManagerId = areaManagerId;
 	}
-
 	public String getAreaManager() {
 		return areaManager;
 	}
-
 	public void setAreaManager(String areaManager) {
 		this.areaManager = areaManager;
 	}
-
-	public ZoneEntity getZoneId() {
-		return zoneId;
-	}
-
-	public void setZoneId(ZoneEntity zoneId) {
-		this.zoneId = zoneId;
-	}
-
 	
-
+	
+	
+	
 }

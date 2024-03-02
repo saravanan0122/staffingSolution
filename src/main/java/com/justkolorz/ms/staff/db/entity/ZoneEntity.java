@@ -37,9 +37,12 @@ public class ZoneEntity implements Serializable{
 	private int phoneNumber;
 	private String zoneManagerCode;
 	private String zoneManager;
+
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	@JoinColumn(name = "organizationId")
 	private OrganizationEntity organizationId;
+		
+	
 	public UUID getZoneId() {
 		return zoneId;
 	}

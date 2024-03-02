@@ -9,6 +9,8 @@ import com.justkolorz.ms.staff.db.entity.BranchEntity;
 
 @Repository
 public interface BranchRepository extends JpaRepository<BranchEntity , UUID> {
+
+	BranchEntity findByBranchId(UUID branchId);
 	
 
 
