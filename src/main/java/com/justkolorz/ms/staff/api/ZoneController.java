@@ -37,9 +37,6 @@ public class ZoneController {
 	@Autowired
 	OrganizationRepository orgRepository;
 	
-	
-	//ModelMapper modelMapper = new ModelMapper();
-
 	@PostMapping("/create")
 	private ResponseEntity<String> craeteZone(@RequestBody ZoneDTO zone) {
 		

@@ -1,41 +1,31 @@
-package com.justkolorz.ms.staff.db.entity;
+package com.justkolorz.ms.staff.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
-
-import org.hibernate.annotations.UuidGenerator;
-import org.hibernate.annotations.UuidGenerator.Style;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Entity
-@Table(name="department", schema = "staafing_service_dev")
 @Data
 @EqualsAndHashCode
-public class DepartmentEntity implements Serializable{
+public class DepartmentDTO {
 
-	private static final long serialVersionUID = 1L;
-	@Id	
-	@GeneratedValue(generator ="uuid2")
-	@UuidGenerator(style = Style.AUTO)
-	private UUID departmentId;
+	private String departmentId;
 	private String departmentName;
 	private String departmentCode;
 	private String email;
 	private String departmentHead;
 	private String departmentHeadId;
 	private String phoneNumber;
-	private UUID branchId;
-	
-	public UUID getDepartmentId() {
+	private String branchId;
+	@Override
+	public String toString() {
+		return "DepartmentDTO [departmentId=" + departmentId + ", departmentName=" + departmentName
+				+ ", departmentCode=" + departmentCode + ", email=" + email + ", departmentHead=" + departmentHead
+				+ ", departmentHeadId=" + departmentHeadId + ", phoneNumber=" + phoneNumber + ", branchId=" + branchId
+				+ "]";
+	}
+	public String getDepartmentId() {
 		return departmentId;
 	}
-	public void setDepartmentId(UUID departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 	public String getDepartmentName() {
@@ -74,12 +64,11 @@ public class DepartmentEntity implements Serializable{
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public UUID getBranchId() {
+	public String getBranchId() {
 		return branchId;
 	}
-	public void setBranchId(UUID branchId) {
+	public void setBranchId(String branchId) {
 		this.branchId = branchId;
 	}
 	
-
 }

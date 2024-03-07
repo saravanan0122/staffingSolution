@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.justkolorz.ms.staff.db.entity.DepartmentEntity;
 import com.justkolorz.ms.staff.db.repository.DepartmentRepository;
+import com.justkolorz.ms.staff.dto.DepartmentDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -30,15 +32,22 @@ public class DepartmentController {
 
 	@Autowired
 	DepartmentRepository departmentRepository;
+	
 
 	@PostMapping("/create")
-	private ResponseEntity<String> craeteDepartment(@RequestBody DepartmentEntity department) {
-		return new ResponseEntity<>(departmentRepository.save(department).getDepartmentName(), HttpStatus.OK);
+	private ResponseEntity<String> craeteDepartment(@RequestBody DepartmentDTO department) {		
+		var departmentEntity  = new DepartmentEntity();
+		BeanUtils.copyProperties(department, departmentEntity);
+		departmentEntity.setBranchId(UUID.fromString(department.getBranchId()));
+		return new ResponseEntity<>(departmentRepository.save(departmentEntity).getDepartmentName(), HttpStatus.OK);
 	}
 
 	@PutMapping("/update")
-	private ResponseEntity<String> updateDepartment(@RequestBody DepartmentEntity department) {
-		return new ResponseEntity<>(departmentRepository.save(department).getDepartmentName(), HttpStatus.OK);
+	private ResponseEntity<String> updateDepartment(@RequestBody DepartmentDTO department) {
+		String[] ignoreProperties = {"departmentId","branchId"};
+		var updatedDepartment  = departmentRepository.findByDepartmentId(UUID.fromString(department.getDepartmentId()));
+		BeanUtils.copyProperties(department, updatedDepartment,ignoreProperties);
+		return new ResponseEntity<>(departmentRepository.save(updatedDepartment).getDepartmentName(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{departmentId}")
@@ -58,5 +67,6 @@ public class DepartmentController {
 		List<DepartmentEntity> departments = departmentRepository.findAll();
 		return ResponseEntity.ok().body(departments);
 	}
+
 
 }

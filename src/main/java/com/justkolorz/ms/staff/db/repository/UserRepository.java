@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.justkolorz.ms.staff.db.entity.UserEntity;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity , UUID> {
-	
+public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
+	UserEntity findByUserId(UUID userId);
 
 }
